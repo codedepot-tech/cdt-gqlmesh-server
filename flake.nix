@@ -3,8 +3,9 @@
 
   nixConfig.bash-prompt = "gql-mesh~~$ ";
 
-  outputs = { self, nixpkgs }: {
+  outputs = { self, nixpkgs }:
     let
+      pkgs = import nixpkgs { system = "x86_64-linux"; };
       gql-server = pkgs.mkYarnPackage {
         name = "cdt-gqlmesh-server";
         src = ./.;
@@ -13,20 +14,20 @@
         yarnNix = ./yarn.nix;
       };
     in
-    packages.x86_64-linux.cdt-gqlmesh-server = gql-server;
+    {
+      packages.x86_64-linux.cdt-gqlmesh-server = gql-server;
 
-    defaultPackage.x86_64-linux = gql-server;
+      defaultPackage.x86_64-linux = gql-server;
 
-    devShell = pkgs.mkShell {
-      buildInputs = [
-        gql-server
-      ];
-      shellHook = ''
-        echo ""
-        echo "Welcome to CodeDepot's GraphQL Mesh Server"
-        echo ""
-      '';
+      devShell = pkgs.mkShell {
+        buildInputs = [
+          gql-server
+        ];
+        shellHook = ''
+          echo ""
+          echo "Welcome to CodeDepot's GraphQL Mesh Server"
+          echo ""
+        '';
+      };
     };
-
-  };
 }
