@@ -1,0 +1,11 @@
+sources:
+  - name: BybitExchange
+    handler:
+      openapi:
+        source: https://raw.githubusercontent.com/bybit-exchange/api-connectors/master/swagger.json
+
+# sources:
+#   - name: StackExchange
+#     handler: 
+#       openapi:
+#         source: https://raw.githubusercontent.com/grokify/api-specs/master/stackexchange/stackexchange-api-v2.2_openapi-v3.0.yaml
