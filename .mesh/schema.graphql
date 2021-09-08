@@ -1,0 +1,2829 @@
+schema {
+  query: Query
+  mutation: Mutation
+}
+
+type Query {
+  """
+  Get account api-key information.
+  
+  Equivalent to GET /open-api/api-key
+  """
+  aPIkeyInfo: [APIKeyBase]
+  """
+  Get Bybit OpenAPI announcements in the last 30 days in reverse order.
+  
+  Equivalent to GET /v2/public/announcement
+  """
+  commonAnnouncements: [Announcement]
+  """
+  Query LCP info.
+  
+  Equivalent to GET /v2/private/account/lcp
+  """
+  commonGetLcp(
+    """Contract type"""
+    symbol: String!
+  ): [LCPInfo]
+  """
+  Get bybit server time.
+  
+  Equivalent to GET /v2/public/time
+  """
+  commonGetTime: [ServerTime]
+  """
+  Get my conditional order list.
+  
+  Equivalent to GET /v2/private/stop-order/list
+  """
+  conditionalGetOrders(
+    """Page turning mark，Use return cursor,Sign use origin data, in request please urlencode"""
+    cursor: String
+    """Search direction. prev: prev page, next: next page. Defaults to next"""
+    direction: String
+    """Limit for data size per page, max size is 50. Default as showing 20 pieces of data per page."""
+    limit: Float
+    """Stop order status."""
+    stopOrderStatus: String
+    """Contract type"""
+    symbol: String!
+  ): [ConditionalOrdersResBase]
+  """
+  Query real-time stop order information.
+  
+  Equivalent to GET /v2/private/stop-order
+  """
+  conditionalQuery(
+    """Agency customized order ID."""
+    orderLinkId: String
+    """Order ID of conditional order."""
+    stopOrderId: String
+    """Contract type."""
+    symbol: String
+  ): [StopOrderOrdersResBase]
+  """
+  Get user’s trade records.
+  
+  Equivalent to GET /v2/private/execution/list
+  """
+  executionGetTrades(
+    """Limit for data size per page, max size is 50. Default as showing 20 pieces of data per page."""
+    limit: String
+    """OrderID. If not provided, will return user’s trading records."""
+    orderId: String
+    """Page. Default getting first page data."""
+    page: String
+    """Start timestamp point for result."""
+    startTime: String
+    """Contract type."""
+    symbol: String!
+  ): [TradeRecordsBase]
+  """
+  Funding settlement occurs every 8 hours at 00:00 UTC, 08:00 UTC and 16:00 UTC. The current interval's fund fee settlement is based on the previous interval's fund rate. For example, at 16:00, the settlement is based on the fund rate generated at 8:00. The fund rate generated at 16:00 will be used at 0:00 on the next day.
+  
+  Equivalent to GET /open-api/funding/prev-funding
+  """
+  fundingMyLastFee(
+    """Contract type."""
+    symbol: String!
+  ): [FundingFeeBase]
+  """
+  Get predicted funding rate and funding fee.
+  
+  Equivalent to GET /open-api/funding/predicted-funding
+  """
+  fundingPredicted(
+    """Contract type."""
+    symbol: String!
+  ): [FundingPredictedBase]
+  """
+  Get predicted funding rate and funding fee.
+  
+  Equivalent to GET /open-api/funding/prev-funding-rate
+  """
+  fundingPrevRate(
+    """Contract type."""
+    symbol: String!
+  ): [FundingRateBase]
+  """
+  Get my conditional order list.
+  
+  Equivalent to GET /futures/private/stop-order/list
+  """
+  futuresConditionalGetOrders(
+    """Page turning mark，Use return cursor,Sign use origin data, in request please urlencode"""
+    cursor: String
+    """Search direction. prev: prev page, next: next page. Defaults to next"""
+    direction: String
+    """Limit for data size per page, max size is 50. Default as showing 20 pieces of data per page."""
+    limit: Float
+    """Stop order status."""
+    stopOrderStatus: String
+    """Contract type"""
+    symbol: String!
+  ): [ConditionalOrdersResBase]
+  """
+  Query real-time stop order information.
+  
+  Equivalent to GET /futures/private/stop-order
+  """
+  futuresConditionalQuery(
+    """Agency customized order ID."""
+    orderLinkId: String
+    """Order ID of conditional order."""
+    stopOrderId: String
+    """Contract type."""
+    symbol: String
+  ): [StopOrderOrdersResBase]
+  """
+  Get user’s trade records.
+  
+  Equivalent to GET /futures/private/execution/list
+  """
+  futuresExecutionGetTrades(
+    """Limit for data size per page, max size is 50. Default as showing 20 pieces of data per page."""
+    limit: String
+    """OrderID. If not provided, will return user’s trading records."""
+    orderId: String
+    """Page. Default getting first page data."""
+    page: String
+    """Start timestamp point for result."""
+    startTime: String
+    """Contract type."""
+    symbol: String!
+  ): [TradeRecordsBase]
+  """
+  Get my active order list.
+  
+  Equivalent to GET /futures/private/order/list
+  """
+  futuresOrderGetOrders(
+    """cursor is a unique identifier for a specific record, which acts as a pointer to the next record we want to start querying from to get the next page of results"""
+    cursor: String
+    """Search direction. prev: prev page, next: next page. Defaults to next"""
+    direction: String
+    """TLimit for data size per page, max size is 50. Default as showing 20 pieces of data per page"""
+    limit: Float
+    """Query your orders for all statuses if 'order_status' is empty. If you want to query orders with specific statuses , you can pass the order_status split by"""
+    orderStatus: String
+    """Contract type. Default BTCUSD"""
+    symbol: String!
+  ): [V2OrderListBase]
+  """
+  Get my active order list.
+  
+  Equivalent to GET /futures/private/order
+  """
+  futuresOrderQuery(
+    """Order ID"""
+    orderId: String
+    """Agency customized order ID"""
+    orderLinkId: String
+    """Contract type. Default BTCUSD"""
+    symbol: String
+  ): [QueryOrderBase]
+  """
+  Get user's closed profit and loss records
+  
+  Equivalent to GET /futures/private/trade/closed-pnl/list
+  """
+  futuresPositionsClosePnlRecords(
+    """End timestamp point for result, in second"""
+    endTime: Int
+    """Execution type"""
+    execType: String
+    """Limit for data size per page, max size is 50. Default as showing 20 pieces of data per page."""
+    limit: Int
+    """Page. By default, gets first page of data. Maximum of 50 pages"""
+    page: Int
+    """Start timestamp point for result, in second"""
+    startTime: Int
+    """Contract type"""
+    symbol: String!
+  ): [ClosedPnlBase]
+  """
+  Get my position list.
+  
+  Equivalent to GET /futures/private/position/list
+  """
+  futuresPositionsMyPosition(
+    """Contract type which you want update its margin"""
+    symbol: String
+  ): [Position]
+  """
+  Query historical kline.
+  
+  Equivalent to GET /v2/public/kline/list
+  """
+  klineGet(
+    """from timestamp."""
+    from: Float!
+    """Kline interval."""
+    interval: String!
+    """Contract type."""
+    limit: Float
+    """Contract type."""
+    symbol: String!
+  ): [KlineBase]
+  """
+  Query index price kline.
+  
+  Equivalent to GET /v2/public/index-price-kline
+  """
+  klineIndexPrice(
+    """From timestamp in seconds"""
+    from: Int!
+    """Data refresh interval"""
+    interval: String!
+    """Limit for data size, max size is 1000. Default size is 500"""
+    limit: Int
+    """Contract type."""
+    symbol: String!
+  ): [IndexPriceKlineBase]
+  """
+  Query mark price kline.
+  
+  Equivalent to GET /v2/public/mark-price-kline
+  """
+  klineMarkPrice(
+    """From timestamp in seconds"""
+    from: Int!
+    """Data refresh interval"""
+    interval: String!
+    """Limit for data size, max size is 1000. Default size is 500"""
+    limit: Int
+    """Contract type."""
+    symbol: String!
+  ): [MarkPriceKlineBase]
+  """
+  Query premium index price kline.
+  
+  Equivalent to GET /v2/public/premium-index-kline
+  """
+  klinePremiumIndexPrice(
+    """From timestamp in seconds"""
+    from: Int!
+    """Data refresh interval"""
+    interval: String!
+    """Limit for data size, max size is 1000. Default size is 500"""
+    limit: Int
+    """Contract type."""
+    symbol: String!
+  ): [PremiumIndexPriceKlineBase]
+  """
+  This will get linear active orders
+  
+  Equivalent to GET /private/linear/stop-order/list
+  """
+  linearConditionalGetOrders(limit: String, order: String, orderLinkId: String, page: String, stopOrderId: String, stopOrderStatus: String, symbol: String): [LinearStopOrderRecordsResponseBase]
+  """
+  This will get linear stop orders(real-time)
+  
+  Equivalent to GET /private/linear/stop-order/search
+  """
+  linearConditionalQuery(orderLinkId: String, stopOrderId: String, symbol: String): [LinearSearchStopOrderResultBase]
+  """
+  This will get user's trading records.
+  
+  Equivalent to GET /private/linear/trade/execution/list
+  """
+  linearExecutionGetTrades(endTime: Float, execType: String, limit: Float, page: Float, startTime: Float, symbol: String): [LinearTradeRecordsResponse]
+  """
+  This will get prev funding
+  
+  Equivalent to GET /private/linear/funding/prev-funding
+  """
+  linearFundingMyLastFee(symbol: String): [LinearPrevFundingRespBase]
+  """
+  Get predicted funding rate and funding fee.
+  
+  Equivalent to GET /private/linear/funding/predicted-funding
+  """
+  linearFundingPredicted(
+    """Contract type."""
+    symbol: String!
+  ): [LinearFundingPredictedBase]
+  """
+  This will get prev funding rate
+  
+  Equivalent to GET /public/linear/funding/prev-funding-rate
+  """
+  linearFundingPrevRate(symbol: String!): [LinearPrevFundingRateRespBase]
+  """
+  This will get kline
+  
+  Equivalent to GET /public/linear/kline
+  """
+  linearKlineGet(
+    """from timestamp."""
+    from: Float!
+    """Kline interval."""
+    interval: String!
+    """Contract type."""
+    limit: Float
+    """Contract type."""
+    symbol: String!
+  ): [LinearKlineRespBase]
+  """
+  This will get index price kline
+  
+  Equivalent to GET /public/linear/index-price-kline
+  """
+  linearKlineIndexPrice(
+    """from timestamp."""
+    from: Float!
+    """Kline interval."""
+    interval: String!
+    """Contract type."""
+    limit: Float
+    """Contract type."""
+    symbol: String!
+  ): [IndexPriceKlineBase]
+  """
+  This will get mark price kline
+  
+  Equivalent to GET /public/linear/mark-price-kline
+  """
+  linearKlineMarkPrice(
+    """from timestamp."""
+    from: Float!
+    """Kline interval."""
+    interval: String!
+    """Contract type."""
+    limit: Float
+    """Contract type."""
+    symbol: String!
+  ): [LinearKlineRespBase]
+  """
+  This will get premium index price kline
+  
+  Equivalent to GET /public/linear/premium-index-kline
+  """
+  linearKlinePremiumIndexPrice(
+    """from timestamp."""
+    from: Float!
+    """Kline interval."""
+    interval: String!
+    """Contract type."""
+    limit: Float
+    """Contract type."""
+    symbol: String!
+  ): [PremiumIndexPriceKlineBase]
+  """
+  This will get recent trades
+  
+  Equivalent to GET /public/linear/recent-trading-records
+  """
+  linearMarketTrading(
+    """Contract type."""
+    limit: String
+    """Contract type."""
+    symbol: String!
+  ): [LinearRecentTradingRecordRespBase]
+  """
+  This will get linear active orders
+  
+  Equivalent to GET /private/linear/order/list
+  """
+  linearOrderGetOrders(limit: String, order: String, orderId: String, orderLinkId: String, orderStatus: String, page: String, symbol: String): [LinearOrderRecordsResponseBase]
+  """
+  This will get linear active orders(real-time)
+  
+  Equivalent to GET /private/linear/order/search
+  """
+  linearOrderQuery(orderId: String, orderLinkId: String, symbol: String): [LinearSearchOrderResultBase]
+  """
+  This will get user's closed profit and loss records.
+  
+  Equivalent to GET /private/linear/trade/closed-pnl/list
+  """
+  linearPositionsClosePnlRecords(endTime: Float, execType: String, limit: Float, page: Float, startTime: Float, symbol: String): [LinearClosePnlRecordsResponse]
+  """
+  This will get my position list.
+  
+  Equivalent to GET /private/linear/position/list
+  """
+  linearPositionsMyPosition(symbol: String): [LinearPositionListResultBase]
+  """
+  This will get risk limit.
+  
+  Equivalent to GET /public/linear/risk-limit
+  """
+  linearWalletGetRiskLimit(publicLinearRiskLimitInput: PublicLinearRiskLimitInput!): [LinearRiskLimitRespBase]
+  """
+  Query Account Long Short Ratio
+  
+  Equivalent to GET /v2/public/account-ratio
+  """
+  marketAccountRatio(
+    """Limit for data size, max size is 500. Default size is 50"""
+    limit: Int
+    """Data recording period. 5min, 15min, 30min, 1h, 4h, 1d"""
+    period: String!
+    """Contract type."""
+    symbol: String!
+  ): [AccountRatio]
+  """
+  Query Big Deal
+  
+  Equivalent to GET /v2/public/big-deal
+  """
+  marketBigDeal(
+    """Limit for data size, max size is 1000. Default size is 500"""
+    limit: Int
+    """Contract type."""
+    symbol: String!
+  ): [BigDeal]
+  """
+  Query liq records.
+  
+  Equivalent to GET /v2/public/liq-records
+  """
+  marketLiqRecords(
+    """End timestamp point for result, in millisecond"""
+    endTime: Int
+    """From ID. Default: return latest data"""
+    from: Int
+    """Limit for data size, max size is 1000. Default size is 500"""
+    limit: Int
+    """Start timestamp point for result, in millisecond"""
+    startTime: Int
+    """Contract type."""
+    symbol: String!
+  ): [LiqRecords]
+  """
+  Query Open Interest
+  
+  Equivalent to GET /v2/public/open-interest
+  """
+  marketOpenInterest(
+    """Limit for data size, max size is 200. Default size is 50"""
+    limit: Int
+    """Data recording period. 5min, 15min, 30min, 1h, 4h, 1d"""
+    period: String!
+    """Contract type."""
+    symbol: String!
+  ): [OpenInterest2]
+  """
+  Get the orderbook.
+  
+  Equivalent to GET /v2/public/orderBook/L2
+  """
+  marketOrderbook(
+    """Contract type."""
+    symbol: String!
+  ): [OrderBookBase]
+  """
+  Get the latest information for symbol.
+  
+  Equivalent to GET /v2/public/tickers
+  """
+  marketSymbolInfo(
+    """Contract type."""
+    symbol: String
+  ): [SymbolInfoBase]
+  """
+  Get recent trades
+  
+  Equivalent to GET /v2/public/trading-records
+  """
+  marketTradingRecords(
+    """From ID. Default: return latest data"""
+    from: Int
+    """Number of results. Default 500; max 1000"""
+    limit: Int
+    """Contract type."""
+    symbol: String!
+  ): [TradingRecords]
+  """
+  Get my active order list.
+  
+  Equivalent to GET /v2/private/order/list
+  """
+  orderGetOrders(
+    """cursor is a unique identifier for a specific record, which acts as a pointer to the next record we want to start querying from to get the next page of results"""
+    cursor: String
+    """Search direction. prev: prev page, next: next page. Defaults to next"""
+    direction: String
+    """TLimit for data size per page, max size is 50. Default as showing 20 pieces of data per page"""
+    limit: Float
+    """Query your orders for all statuses if 'order_status' is empty. If you want to query orders with specific statuses , you can pass the order_status split by"""
+    orderStatus: String
+    """Contract type. Default BTCUSD"""
+    symbol: String!
+  ): [V2OrderListBase]
+  """
+  Get my active order list.
+  
+  Equivalent to GET /v2/private/order
+  """
+  orderQuery(
+    """Order ID"""
+    orderId: String
+    """Agency customized order ID"""
+    orderLinkId: String
+    """Contract type. Default BTCUSD"""
+    symbol: String
+  ): [QueryOrderBase]
+  """
+  Get user's closed profit and loss records
+  
+  Equivalent to GET /v2/private/trade/closed-pnl/list
+  """
+  positionsClosePnlRecords(
+    """End timestamp point for result, in second"""
+    endTime: Int
+    """Execution type"""
+    execType: String
+    """Limit for data size per page, max size is 50. Default as showing 20 pieces of data per page."""
+    limit: Int
+    """Page. By default, gets first page of data. Maximum of 50 pages"""
+    page: Int
+    """Start timestamp point for result, in second"""
+    startTime: Int
+    """Contract type"""
+    symbol: String!
+  ): [ClosedPnlBase]
+  """
+  Get my position list.
+  
+  Equivalent to GET /v2/private/position/list
+  """
+  positionsMyPosition(
+    """Contract type which you want update its margin"""
+    symbol: String
+  ): [Position]
+  """
+  Query Symbols.
+  
+  Equivalent to GET /v2/public/symbols
+  """
+  symbolGet: [Symbols]
+  """
+  Asset Exchange Records
+  
+  Equivalent to GET /v2/private/exchange-order/list
+  """
+  walletExchangeOrder(
+    """Search direction. Prev: searches in ascending order from start ID, Next: searches in descending order from start ID. Defaults to Next"""
+    direction: String
+    """Start ID. By default, returns the latest IDs"""
+    from: Float
+    """Limit for data size per page, max size is 50. Default as showing 20 pieces of data per page"""
+    limit: Float
+  ): [ExchangeOrderListBase]
+  """
+  get wallet balance info
+  
+  Equivalent to GET /v2/private/wallet/balance
+  """
+  walletGetBalance(
+    """Coin.enum {BTC,EOS,XRP,ETH,USDT}"""
+    coin: String
+  ): [WalletBalanceBase]
+  """
+  Get wallet fund records
+  
+  Equivalent to GET /open-api/wallet/fund/records
+  """
+  walletGetRecords(
+    """Currency type"""
+    currency: String
+    """End point for result"""
+    endDate: String
+    """Limit for data size per page, max size is 50. Default as showing 20 pieces of data per page"""
+    limit: String
+    """Page. Default getting first page data"""
+    page: String
+    """Start point for result"""
+    startDate: String
+    """wallet fund type"""
+    walletFundType: String
+  ): [FundRecordBase]
+  """
+  Get risk limit.
+  
+  Equivalent to GET /open-api/wallet/risk-limit/list
+  """
+  walletGetRiskLimit: [RiskLimitBase]
+  """
+  Get wallet fund records
+  
+  Equivalent to GET /open-api/wallet/withdraw/list
+  """
+  walletWithdraw(
+    """Currency"""
+    coin: String
+    """End point for result"""
+    endDate: String
+    """Limit for data size per page, max size is 50. Default as showing 20 pieces of data per page"""
+    limit: String
+    """Page. Default getting first page data"""
+    page: String
+    """Start point for result"""
+    startDate: String
+    """Withdraw status"""
+    status: String
+  ): [WithdrawResBase]
+}
+
+"""Get bybit server time."""
+type APIKeyBase {
+  extCode: String
+  extInfo: String
+  result: [APIKeyInfo]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+"""Get bybit server time."""
+type APIKeyInfo {
+  apiKey: String
+  createdAt: String
+  ips: [String]
+  note: String
+  permissions: [String]
+  readOnly: Boolean
+  userId: Float
+}
+
+"""Get Bybit OpenAPI announcements in the last 30 days in reverse order."""
+type Announcement {
+  extCode: String
+  extInfo: String
+  result: [AnnouncementInfo]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+"""Get Bybit OpenAPI announcements in the last 30 days in reverse order."""
+type AnnouncementInfo {
+  createdAt: String
+  id: Float
+  link: String
+  summary: String
+  title: String
+}
+
+"""Query LCP info."""
+type LCPInfo {
+  extCode: String
+  extInfo: String
+  """Query LCP info."""
+  result: LCPInfoBase
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+"""Query LCP info."""
+type LCPInfoBase {
+  date: String
+  platformRatio: Float
+  score: Float
+  selfRatio: Float
+}
+
+"""Get bybit server time."""
+type ServerTime {
+  extCode: String
+  extInfo: String
+  result: JSON
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+"""The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf)."""
+scalar JSON @specifiedBy(url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf")
+
+"""Get conditional order list"""
+type ConditionalOrdersResBase {
+  extCode: String
+  extInfo: String
+  result: [ConditionalOrdersRes]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+"""Get order list response"""
+type ConditionalOrdersRes {
+  cursor: String
+  data: [V2ConditionalListRes]
+}
+
+"""conditional order list response"""
+type V2ConditionalListRes {
+  basePrice: String
+  createdAt: String
+  orderLinkId: String
+  orderType: String
+  price: String
+  qty: String
+  side: String
+  stopOrderId: String
+  stopOrderStatus: String
+  stopOrderType: String
+  stopPx: String
+  symbol: String
+  timeInForce: String
+  triggerBy: String
+  updatedAt: String
+  userId: Float
+}
+
+"""Get conditional order list"""
+type StopOrderOrdersResBase {
+  extCode: String
+  extInfo: String
+  result: [ConditionalRes]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+"""Place new conditional order response"""
+type ConditionalRes {
+  basePrice: Float
+  createdAt: String
+  orderLinkId: String
+  orderType: String
+  price: Float
+  qty: Float
+  side: String
+  stopOrderId: String
+  stopOrderStatus: String
+  stopOrderType: String
+  stopPx: Float
+  symbol: String
+  timeInForce: String
+  updatedAt: String
+  userId: Float
+}
+
+"""Get the trade records of a order response"""
+type TradeRecordsBase {
+  extCode: String
+  extInfo: String
+  result: [TradeRecords]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+"""Get the trade records of a order response"""
+type TradeRecords {
+  orderId: String
+  tradeList: [TradeRecordsInfo]
+}
+
+"""Get the trade records of a order response"""
+type TradeRecordsInfo {
+  closedSize: Float
+  crossSeq: Float
+  execFee: String
+  execId: String
+  execPrice: String
+  execQty: Float
+  execTime: String
+  execType: String
+  execValue: String
+  feeRate: String
+  lastLiquidityInd: String
+  leavesQty: Float
+  nthFill: Float
+  orderId: String
+  orderPrice: String
+  orderQty: Float
+  orderType: String
+  side: String
+  symbol: String
+  userId: Float
+}
+
+"""Get the last funding fee"""
+type FundingFeeBase {
+  extCode: String
+  extInfo: String
+  result: [FundingFeeRes]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+"""Get the last funding fee"""
+type FundingFeeRes {
+  execFee: Float
+  execTimestamp: Float
+  fundingRate: String
+  side: String
+  size: Float
+  symbol: String
+}
+
+"""Get the last funding fee"""
+type FundingPredictedBase {
+  extCode: String
+  extInfo: String
+  result: [FundingPredicted]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+"""Get the last funding fee"""
+type FundingPredicted {
+  predictedFundingFee: Float
+  predictedFundingRate: Float
+}
+
+"""Get the last funding Rate"""
+type FundingRateBase {
+  extCode: String
+  extInfo: String
+  result: [FundingRate2]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+"""Get the last funding Rate"""
+type FundingRate2 {
+  fundingRate: String
+  fundingRateTimestamp: Float
+  symbol: String
+}
+
+"""Get order list response"""
+type V2OrderListBase {
+  extCode: String
+  extInfo: String
+  result: [V2OrderListData]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+"""Get order list response"""
+type V2OrderListData {
+  cursor: String
+  data: [V2OrderRes]
+}
+
+"""order list response"""
+type V2OrderRes {
+  createdAt: String
+  cumExecFee: String
+  cumExecQty: String
+  cumExecValue: String
+  leavesQty: String
+  leavesValue: String
+  orderId: String
+  orderLinkId: String
+  orderStatus: String
+  orderType: String
+  price: String
+  qty: String
+  rejectReason: String
+  side: String
+  symbol: String
+  timeInForce: String
+  updatedAt: String
+  userId: Float
+}
+
+"""Query real-time active order information response"""
+type QueryOrderBase {
+  extCode: String
+  extInfo: String
+  result: [QueryOrderRes]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+"""Query real-time active order information response"""
+type QueryOrderRes {
+  createdAt: String
+  cumExecQty: Float
+  extFields: [ExtFields2]
+  leavesQty: Float
+  leavesValue: Float
+  orderId: String
+  orderLinkId: String
+  orderStatus: String
+  orderType: String
+  price: Float
+  qty: String
+  rejectReason: String
+  side: String
+  symbol: String
+  timeInForce: String
+  updatedAt: String
+  userId: Float
+}
+
+"""extra fields"""
+type ExtFields2 {
+  oReqNum: Float
+  xreqOffset: Float
+  xreqType: String
+}
+
+"""Get the closed-pnl/list response"""
+type ClosedPnlBase {
+  extCode: String
+  extInfo: String
+  result: [ClosedPnlInfo]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+"""Get the closed-pnl/list response"""
+type ClosedPnlInfo {
+  avgEntryPrice: Int
+  avgExitPrice: Int
+  closedPnl: Float
+  closedSize: Int
+  createdAt: Int
+  cumEntryValue: Float
+  cumExitValue: Float
+  execType: String
+  fillCount: Int
+  id: Int
+  leverage: Int
+  orderId: String
+  orderPrice: Int
+  orderType: String
+  qty: Int
+  side: String
+  symbol: String
+  userId: Int
+}
+
+"""Get my position list."""
+type Position {
+  extCode: String
+  extInfo: String
+  result: [PositionInfo]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+"""PositionInfo."""
+type PositionInfo {
+  autoAddMargin: Float
+  bustPrice: Float
+  createdAt: String
+  crossSeq: Float
+  cumCommission: Float
+  cumRealisedPnl: Float
+  deleverageIndicator: String
+  entryPrice: Float
+  id: Float
+  leverage: Float
+  liqPrice: Float
+  ocCalcData: String
+  occClosingFee: Float
+  occFundingFee: Float
+  orderMargin: Float
+  positionMargin: Float
+  positionSeq: Float
+  positionStatus: String
+  positionValue: Float
+  realisedPnl: Float
+  riskId: Float
+  side: String
+  size: Float
+  stopLoss: Float
+  symbol: String
+  takeProfit: Float
+  unrealisedPnl: Float
+  updatedAt: String
+  userId: Float
+  walletBalance: Float
+}
+
+"""Get the orderbook response"""
+type KlineBase {
+  extCode: String
+  extInfo: String
+  result: [KlineRes]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+"""Get the orderbook response"""
+type KlineRes {
+  close: String
+  high: String
+  interval: String
+  low: String
+  open: String
+  openTime: Float
+  symbol: String
+  volume: String
+}
+
+"""Get mark price kline information."""
+type IndexPriceKlineBase {
+  extCode: String
+  extInfo: String
+  result: [IndexPriceKlineInfo]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+type IndexPriceKlineInfo {
+  close: String
+  high: String
+  low: String
+  open: String
+  openTime: Int
+  period: String
+  symbol: String
+}
+
+"""Get mark price kline information."""
+type MarkPriceKlineBase {
+  extCode: String
+  extInfo: String
+  result: [MarkPriceKlineInfo]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+type MarkPriceKlineInfo {
+  close: Int
+  high: Int
+  id: Int
+  low: Int
+  open: Int
+  period: String
+  startAt: Int
+  symbol: String
+}
+
+"""Get mark price kline information."""
+type PremiumIndexPriceKlineBase {
+  extCode: String
+  extInfo: String
+  result: [PremiumIndexPriceKlineInfo]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+type PremiumIndexPriceKlineInfo {
+  close: String
+  high: String
+  low: String
+  open: String
+  openTime: Int
+  period: String
+  symbol: String
+}
+
+"""Linear Stop Order list Base"""
+type LinearStopOrderRecordsResponseBase {
+  extCode: String
+  extInfo: String
+  result: [LinearStopOrderRecordsResponse]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+type LinearStopOrderRecordsResponse {
+  currentPage: Float
+  data: [LinearListStopOrderResult]
+  lastPage: Float
+}
+
+type LinearListStopOrderResult {
+  createdAt: String
+  orderLinkId: String
+  orderStatus: String
+  orderType: String
+  price: Float
+  qty: Float
+  side: String
+  slTriggerBy: String
+  stopLoss: Float
+  stopOrderId: String
+  symbol: String
+  takeProfit: Float
+  timeInForce: String
+  tpTriggerBy: String
+  triggerPrice: Float
+  updatedAt: String
+  userId: Float
+}
+
+"""Linear Order Query Result Base"""
+type LinearSearchStopOrderResultBase {
+  extCode: String
+  extInfo: String
+  result: [LinearSearchStopOrderResult]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+type LinearSearchStopOrderResult {
+  createdAt: String
+  orderLinkId: String
+  orderStatus: String
+  orderType: String
+  price: Float
+  qty: Float
+  side: String
+  slTriggerBy: String
+  stopLoss: Float
+  stopOrderId: String
+  symbol: String
+  takeProfit: Float
+  timeInForce: String
+  tpTriggerBy: String
+  triggerPrice: Float
+  updatedAt: String
+  userId: Float
+}
+
+"""Linear Positions Result Base"""
+type LinearTradeRecordsResponse {
+  extCode: String
+  extInfo: String
+  result: [LinearTradeRecordItem]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+type LinearTradeRecordItem {
+  closedSize: Float
+  execFee: Float
+  execId: String
+  execPrice: Float
+  execQty: Float
+  execType: String
+  execValue: Float
+  feeRate: Float
+  lastLiquidityInd: String
+  leavesQty: Float
+  orderId: String
+  orderLinkId: String
+  orderPrice: Float
+  orderQty: Float
+  orderType: String
+  price: Float
+  side: String
+  symbol: String
+  tradeTime: Float
+  tradeTimeMs: Float
+}
+
+"""Get My Last Funding"""
+type LinearPrevFundingRespBase {
+  extCode: String
+  extInfo: String
+  result: [LinearPrevFundingResp]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+type LinearPrevFundingResp {
+  execFee: Float
+  execTime: String
+  fundingRate: Float
+  side: String
+  size: Float
+  symbol: String
+}
+
+"""Get Predicted Funding"""
+type LinearFundingPredictedBase {
+  extCode: String
+  extInfo: String
+  result: [LinearFundingPredicted]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+type LinearFundingPredicted {
+  predictedFundingFee: Float
+  predictedFundingRate: Float
+}
+
+"""Get Prev Funding Rate"""
+type LinearPrevFundingRateRespBase {
+  extCode: String
+  extInfo: String
+  result: [LinearPrevFundingRateResp]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+type LinearPrevFundingRateResp {
+  fundingRate: Float
+  fundingRateTimestamp: String
+  symbol: String
+}
+
+"""Get Kline"""
+type LinearKlineRespBase {
+  extCode: String
+  extInfo: String
+  result: [LinearKlineResp]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+type LinearKlineResp {
+  close: Float
+  high: Float
+  id: Int
+  interval: String
+  low: Float
+  open: Float
+  openTime: Float
+  period: String
+  startAt: Float
+  symbol: String
+  turnover: Float
+  volume: Float
+}
+
+"""Get Recent Trading Record"""
+type LinearRecentTradingRecordRespBase {
+  extCode: String
+  extInfo: String
+  result: [LinearRecentTradingRecordResp]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+type LinearRecentTradingRecordResp {
+  id: String
+  price: Float
+  qty: Float
+  side: String
+  symbol: String
+  time: String
+  tradeTimeMs: Float
+}
+
+"""Linear Order list Base"""
+type LinearOrderRecordsResponseBase {
+  extCode: String
+  extInfo: String
+  result: [LinearOrderRecordsResponse]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+type LinearOrderRecordsResponse {
+  currentPage: Float
+  data: [LinearListOrderResult]
+}
+
+type LinearListOrderResult {
+  createdTime: String
+  cumExecFee: Float
+  cumExecQty: Float
+  cumExecValue: Float
+  lastExecPrice: Float
+  orderId: String
+  orderLinkId: String
+  orderStatus: String
+  orderType: String
+  price: Float
+  qty: Float
+  reduceOnly: Boolean
+  side: String
+  slTriggerBy: String
+  stopLoss: Float
+  symbol: String
+  takeProfit: Float
+  timeInForce: String
+  tpTriggerBy: String
+  updatedTime: String
+  userId: Float
+}
+
+"""Linear Order Query Result Base"""
+type LinearSearchOrderResultBase {
+  extCode: String
+  extInfo: String
+  result: [LinearSearchOrderResult]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+type LinearSearchOrderResult {
+  createdTime: String
+  cumExecFee: Float
+  cumExecQty: Float
+  cumExecValue: Float
+  lastExecPrice: Float
+  orderId: String
+  orderLinkId: String
+  orderStatus: String
+  orderType: String
+  price: Float
+  qty: Float
+  reduceOnly: Boolean
+  side: String
+  slTriggerBy: String
+  stopLoss: Float
+  symbol: String
+  takeProfit: Float
+  timeInForce: String
+  tpTriggerBy: String
+  updatedTime: String
+  userId: Float
+}
+
+"""Linear Positions Result Base"""
+type LinearClosePnlRecordsResponse {
+  extCode: String
+  extInfo: String
+  result: [LinearClosedPnlRecordResult]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+type LinearClosedPnlRecordResult {
+  avgEntryPrice: Float
+  avgExitPrice: Float
+  closedPnl: Float
+  closedSize: Float
+  createdAt: Float
+  cumEntryValue: Float
+  cumExitValue: Float
+  execType: String
+  fillCount: Int
+  id: Float
+  leverage: Float
+  orderId: String
+  orderPrice: Float
+  orderType: String
+  qty: Float
+  side: String
+  symbol: String
+  userId: Float
+}
+
+"""Linear Positions Result Base"""
+type LinearPositionListResultBase {
+  extCode: String
+  extInfo: String
+  result: [LinearPositionListResult]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+type LinearPositionListResult {
+  bustPrice: Float
+  cumRealisedPnl: Float
+  entryPrice: Float
+  freeQty: Float
+  leverage: Float
+  liqPrice: Float
+  occClosingFee: Float
+  positionMargin: Float
+  positionValue: Float
+  realisedPnl: Float
+  side: String
+  size: Float
+  symbol: String
+  tpSlMode: String
+  userId: Float
+}
+
+"""Get Risk Limit"""
+type LinearRiskLimitRespBase {
+  extCode: String
+  extInfo: String
+  result: [LinearRiskLimitResp]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+type LinearRiskLimitResp {
+  createdAt: String
+  id: Int
+  isLowestRisk: Int
+  limit: Float
+  maintainMargin: Float
+  section: [String]
+  startingMargin: Float
+  symbol: String
+  updatedAt: String
+}
+
+input PublicLinearRiskLimitInput {
+  """Contract type."""
+  symbol: String!
+}
+
+"""Get account long short account ratio information."""
+type AccountRatio {
+  extCode: String
+  extInfo: String
+  result: [AccountRatioInfo]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+type AccountRatioInfo {
+  buyRatio: Int
+  sellRatio: Int
+  symbol: String
+  timestamp: Int
+}
+
+"""Get big deal information."""
+type BigDeal {
+  extCode: String
+  extInfo: String
+  result: [BigDealInfo]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+type BigDealInfo {
+  side: String
+  symbol: String
+  timestamp: Int
+  value: Int
+}
+
+"""Get liq_records information."""
+type LiqRecords {
+  extCode: String
+  extInfo: String
+  result: [LiqRecordsInfo]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+type LiqRecordsInfo {
+  id: Int
+  price: Int
+  qty: Int
+  side: String
+  symbol: String
+  time: Int
+}
+
+"""Get open_interest information."""
+type OpenInterest2 {
+  extCode: String
+  extInfo: String
+  result: [OpenInterestInfo]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+type OpenInterestInfo {
+  openInterest: Int
+  symbol: String
+  timestamp: Int
+}
+
+"""Get the orderbook response"""
+type OrderBookBase {
+  extCode: String
+  extInfo: String
+  result: [OderBookRes]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+"""Get the orderbook response"""
+type OderBookRes {
+  price: String
+  side: String
+  size: Float
+  symbol: String
+}
+
+"""Get the orderbook response"""
+type SymbolInfoBase {
+  extCode: String
+  extInfo: String
+  result: [SymbolTickInfo]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+"""Get the orderbook response"""
+type SymbolTickInfo {
+  askPrice: String
+  bidPrice: String
+  countdownHour: Float
+  fundingRate: String
+  highPrice24h: String
+  indexPrice: String
+  lastPrice: String
+  lastTickDirection: String
+  lowPrice24h: String
+  markPrice: String
+  nextFundingTime: String
+  openInterest: Float
+  openValue: String
+  predictedFundingRate: String
+  prevPrice1h: String
+  prevPrice24h: String
+  price1hPcnt: String
+  price24hPcnt: String
+  symbol: String
+  totalTurnover: String
+  totalVolume: Float
+  turnover24h: String
+  volume24h: Float
+}
+
+"""Get the Trading Records response"""
+type TradingRecords {
+  extCode: String
+  extInfo: String
+  result: [TradingRecordsInfo]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+"""Get the orderbook response"""
+type TradingRecordsInfo {
+  id: Int
+  price: Float
+  qty: Float
+  side: String
+  symbol: String
+  time: String
+}
+
+"""Get symbol information."""
+type Symbols {
+  extCode: String
+  extInfo: String
+  result: [SymbolInfo]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+type SymbolInfo {
+  baseCurrency: String
+  lotSizeFilter: [LotSizeFilter2]
+  name: String
+  priceFilter: [PriceFilter2]
+  priceScale: Float
+  quoteCurrency: String
+}
+
+type LotSizeFilter2 {
+  maxTradingQty: JSON
+  minTradingQty: JSON
+  qtyStep: JSON
+}
+
+type PriceFilter2 {
+  maxPrice: String
+  minPrice: String
+  tickSize: String
+}
+
+"""Asset Exchange Records"""
+type ExchangeOrderListBase {
+  extCode: String
+  extInfo: String
+  result: [ExchangeOrderList]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+"""Asset Exchange Records"""
+type ExchangeOrderList {
+  createdAt: String
+  exchangeRate: Float
+  fromAmount: Float
+  fromCoin: String
+  fromFee: Float
+  toAmount: Float
+  toCoin: String
+}
+
+"""Get account withdraw balance response"""
+type WalletBalanceBase {
+  extCode: String
+  extInfo: String
+  result: JSON
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+"""Get funding record response"""
+type FundRecordBase {
+  extCode: String
+  extInfo: String
+  result: [FundingRecords]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+"""Get funding record response"""
+type FundingRecords {
+  address: String
+  amount: String
+  coin: String
+  crossSeq: Float
+  execTime: String
+  id: Float
+  txId: String
+  type: String
+  userId: Float
+  walletBalance: String
+  walletId: Float
+}
+
+"""Get risk limit."""
+type RiskLimitBase {
+  extCode: String
+  extInfo: String
+  result: [GetRiskLimitRes]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+"""Get risk limit."""
+type GetRiskLimitRes {
+  extCode: String
+  extInfo: String
+  result: [RiskIDRes]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+"""Set risk limit."""
+type RiskIDRes {
+  coin: String
+  createdAt: String
+  id: Float
+  isLowestRisk: Float
+  limit: Float
+  maintainMargin: String
+  section: String
+  startingMargin: String
+  updatedAt: String
+}
+
+"""Get account withdraw records response"""
+type WithdrawResBase {
+  extCode: String
+  extInfo: String
+  result: [WithdrawRecords]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+"""Get withdraw records response"""
+type WithdrawRecords {
+  address: String
+  amount: String
+  coin: String
+  fee: String
+  id: Float
+  status: String
+  submitedAt: String
+  txId: String
+  updatedAt: String
+  userId: Float
+}
+
+type Mutation {
+  """
+  Cancel conditional order.
+  
+  Equivalent to POST /v2/private/stop-order/cancel
+  """
+  conditionalCancel(v2PrivateStopOrderCancelInput: V2PrivateStopOrderCancelInput): [V2CancelOrderBase]
+  """
+  Cancel conditional order.
+  
+  Equivalent to POST /v2/private/stop-order/cancelAll
+  """
+  conditionalCancelAll(v2PrivateStopOrderCancelAllInput: V2PrivateStopOrderCancelAllInput!): [ConditionalCancelAllBase]
+  """
+  Place a new conditional order.
+  
+  Equivalent to POST /v2/private/stop-order/create
+  """
+  conditionalNew(v2PrivateStopOrderCreateInput: V2PrivateStopOrderCreateInput!): [V2ConditionalBase]
+  """
+  Replace conditional order. Only incomplete orders can be modified. 
+  
+  Equivalent to POST /v2/private/stop-order/replace
+  """
+  conditionalReplace(v2PrivateStopOrderReplaceInput: V2PrivateStopOrderReplaceInput): [ReplaceConditionalBase]
+  """
+  Cancel conditional order.
+  
+  Equivalent to POST /futures/private/stop-order/cancel
+  """
+  futuresConditionalCancel(futuresPrivateStopOrderCancelInput: FuturesPrivateStopOrderCancelInput): [V2CancelOrderBase]
+  """
+  Cancel conditional order.
+  
+  Equivalent to POST /futures/private/stop-order/cancelAll
+  """
+  futuresConditionalCancelAll(futuresPrivateStopOrderCancelAllInput: FuturesPrivateStopOrderCancelAllInput!): [ConditionalCancelAllBase]
+  """
+  Place a new conditional order.
+  
+  Equivalent to POST /futures/private/stop-order/create
+  """
+  futuresConditionalNew(futuresPrivateStopOrderCreateInput: FuturesPrivateStopOrderCreateInput!): [V2ConditionalBase]
+  """
+  Replace conditional order. Only incomplete orders can be modified. 
+  
+  Equivalent to POST /futures/private/stop-order/replace
+  """
+  futuresConditionalReplace(futuresPrivateStopOrderReplaceInput: FuturesPrivateStopOrderReplaceInput): [ReplaceConditionalBase]
+  """
+  Get my active order list.
+  
+  Equivalent to POST /futures/private/order/cancel
+  """
+  futuresOrderCancel(futuresPrivateOrderCancelInput: FuturesPrivateOrderCancelInput): [OrderCancelBase]
+  """
+  Get my active order list.
+  
+  Equivalent to POST /futures/private/order/cancelAll
+  """
+  futuresOrderCancelAll(futuresPrivateOrderCancelAllInput: FuturesPrivateOrderCancelAllInput!): [OrderCancelAllBase]
+  """
+  Place active order
+  
+  Equivalent to POST /futures/private/order/create
+  """
+  futuresOrderNew(futuresPrivateOrderCreateInput: FuturesPrivateOrderCreateInput!): [OrderResBase]
+  """
+  Replace active order. Only incomplete orders can be modified. 
+  
+  Equivalent to POST /futures/private/order/replace
+  """
+  futuresOrderReplace(futuresPrivateOrderReplaceInput: FuturesPrivateOrderReplaceInput): [ReplaceOrderBase]
+  """
+  Update margin.
+  
+  Equivalent to POST /futures/private/position/change-position-margin
+  """
+  futuresPositionsChangeMargin(futuresPrivatePositionChangePositionMarginInput: FuturesPrivatePositionChangePositionMarginInput!): [ServerTime]
+  """
+  Change user leverage.
+  
+  Equivalent to POST /futures/private/position/leverage/save
+  """
+  futuresPositionsSaveLeverage(futuresPrivatePositionLeverageSaveInput: FuturesPrivatePositionLeverageSaveInput!): [ServerTime]
+  """
+  Switch position isolated.
+  
+  Equivalent to POST /futures/private/position/switch-isolated
+  """
+  futuresPositionsSwitchIsolated(futuresPrivatePositionSwitchIsolatedInput: FuturesPrivatePositionSwitchIsolatedInput!): [ServerTime]
+  """
+  Switch position mode.
+  
+  Equivalent to POST /futures/private/position/switch-mode
+  """
+  futuresPositionsSwitchPositionMode(futuresPrivatePositionSwitchModeInput: FuturesPrivatePositionSwitchModeInput!): [ServerTime]
+  """
+  Set Trading-Stop Condition.
+  
+  Equivalent to POST /futures/private/position/trading-stop
+  """
+  futuresPositionsTradingStop(futuresPrivatePositionTradingStopInput: FuturesPrivatePositionTradingStopInput!): [TradingStopBase]
+  """
+  This will cancel linear active order
+  
+  Equivalent to POST /private/linear/stop-order/cancel
+  """
+  linearConditionalCancel(privateLinearStopOrderCancelInput: PrivateLinearStopOrderCancelInput): [LinearCancelStopOrderResultBase]
+  """
+  Cancel all stop orders.
+  
+  Equivalent to POST /private/linear/stop-order/cancel-all
+  """
+  linearConditionalCancelAll(privateLinearStopOrderCancelAllInput: PrivateLinearStopOrderCancelAllInput!): [LinearStopOrderCancelAllBase]
+  """
+  This will create linear stop order
+  
+  Equivalent to POST /private/linear/stop-order/create
+  """
+  linearConditionalNew(privateLinearStopOrderCreateInput: PrivateLinearStopOrderCreateInput): [LinearCreateStopOrderResultBase]
+  """
+  Replace conditional order
+  
+  Equivalent to POST /private/linear/stop-order/replace
+  """
+  linearConditionalReplace(privateLinearStopOrderReplaceInput: PrivateLinearStopOrderReplaceInput!): [LinearStopOrderReplace]
+  """
+  This will cancel linear active order
+  
+  Equivalent to POST /private/linear/order/cancel
+  """
+  linearOrderCancel(privateLinearOrderCancelInput: PrivateLinearOrderCancelInput): [LinearCancelOrderResultBase]
+  """
+  Cancel all active orders.
+  
+  Equivalent to POST /private/linear/order/cancel-all
+  """
+  linearOrderCancelAll(privateLinearOrderCancelAllInput: PrivateLinearOrderCancelAllInput!): [LinearOrderCancelAllBase]
+  """
+  This will create linear order
+  
+  Equivalent to POST /private/linear/order/create
+  """
+  linearOrderNew(privateLinearOrderCreateInput: PrivateLinearOrderCreateInput): [LinearCreateOrderResultBase]
+  """
+  Replace Active Order
+  
+  Equivalent to POST /private/linear/order/replace
+  """
+  linearOrderReplace(privateLinearOrderReplaceInput: PrivateLinearOrderReplaceInput!): [LinearOrderReplace]
+  """
+  This will Add/Reduce Margin
+  
+  Equivalent to POST /private/linear/position/add-margin
+  """
+  linearPositionsChangeMargin(privateLinearPositionAddMarginInput: PrivateLinearPositionAddMarginInput): [LinearSetMarginResult]
+  """
+  This will Set Leverage
+  
+  Equivalent to POST /private/linear/position/set-leverage
+  """
+  linearPositionsSaveLeverage(privateLinearPositionSetLeverageInput: PrivateLinearPositionSetLeverageInput): [LinearSetLeverageResult]
+  """
+  This will Set auto add margin
+  
+  Equivalent to POST /private/linear/position/set-auto-add-margin
+  """
+  linearPositionsSetAutoAddMargin(privateLinearPositionSetAutoAddMarginInput: PrivateLinearPositionSetAutoAddMarginInput): [LinearSetMarginResult]
+  """
+  This will switch isolated
+  
+  Equivalent to POST /private/linear/position/switch-isolated
+  """
+  linearPositionsSwitchIsolated(privateLinearPositionSwitchIsolatedInput: PrivateLinearPositionSwitchIsolatedInput): [LinearSwitchIsolatedResult]
+  """
+  This will Switch TP/SL Mode
+  
+  Equivalent to POST /private/linear/tpsl/switch-mode
+  """
+  linearPositionsSwitchMode(privateLinearTpslSwitchModeInput: PrivateLinearTpslSwitchModeInput): [LinearSwitchModeResult]
+  """
+  This will set tradingStop
+  
+  Equivalent to POST /private/linear/position/trading-stop
+  """
+  linearPositionsTradingStop(privateLinearPositionTradingStopInput: PrivateLinearPositionTradingStopInput): [LinearSetTradingStopResult]
+  """
+  This will set risk limit
+  
+  Equivalent to POST /private/linear/position/set-risk
+  """
+  linearWalletSetRiskLimit(privateLinearPositionSetRiskInput: PrivateLinearPositionSetRiskInput!): [LinearSetRiskLimit]
+  """
+  Get my active order list.
+  
+  Equivalent to POST /v2/private/order/cancel
+  """
+  orderCancel(v2PrivateOrderCancelInput: V2PrivateOrderCancelInput): [OrderCancelBase]
+  """
+  Get my active order list.
+  
+  Equivalent to POST /v2/private/order/cancelAll
+  """
+  orderCancelAll(v2PrivateOrderCancelAllInput: V2PrivateOrderCancelAllInput!): [OrderCancelAllBase]
+  """
+  Place active order
+  
+  Equivalent to POST /v2/private/order/create
+  """
+  orderNew(v2PrivateOrderCreateInput: V2PrivateOrderCreateInput!): [OrderResBase]
+  """
+  Replace active order. Only incomplete orders can be modified. 
+  
+  Equivalent to POST /v2/private/order/replace
+  """
+  orderReplace(v2PrivateOrderReplaceInput: V2PrivateOrderReplaceInput): [ReplaceOrderBase]
+  """
+  Update margin.
+  
+  Equivalent to POST /position/change-position-margin
+  """
+  positionsChangeMargin(positionChangePositionMarginInput: PositionChangePositionMarginInput!): [ServerTime]
+  """
+  Change user leverage.
+  
+  Equivalent to POST /user/leverage/save
+  """
+  positionsSaveLeverage(userLeverageSaveInput: UserLeverageSaveInput!): [ServerTime]
+  """
+  Set Trading-Stop Condition.
+  
+  Equivalent to POST /open-api/position/trading-stop
+  """
+  positionsTradingStop(openApiPositionTradingStopInput: OpenApiPositionTradingStopInput!): [TradingStopBase]
+  """
+  Set risk limit
+  
+  Equivalent to POST /open-api/wallet/risk-limit
+  """
+  walletSetRiskLimit(openApiWalletRiskLimitInput: OpenApiWalletRiskLimitInput!): [SetRiskLimitBase]
+}
+
+"""Place new conditional order response"""
+type V2CancelOrderBase {
+  extCode: String
+  extInfo: String
+  result: [Result22ListItem]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+"""Cancel Stop Order"""
+type Result22ListItem {
+  stopOrderId: String
+}
+
+input V2PrivateStopOrderCancelInput {
+  """Agency customized order ID."""
+  orderLinkId: String
+  """Order ID of conditional order."""
+  stopOrderId: String
+  """Contract type."""
+  symbol: String!
+}
+
+"""Cancel all conditional order response"""
+type ConditionalCancelAllBase {
+  extCode: String
+  extInfo: String
+  result: [ConditionalCancelAllRes]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+"""Cancel all conditional order response"""
+type ConditionalCancelAllRes {
+  cancelType: String
+  clOrdID: String
+  createType: String
+  createdAt: String
+  crossSeq: Float
+  leavesQty: Float
+  leavesValue: String
+  orderStatus: String
+  orderType: String
+  price: String
+  qty: Float
+  side: String
+  stopOrderType: String
+  symbol: String
+  timeInForce: String
+  triggerBy: String
+  updatedAt: String
+  userId: Float
+}
+
+input V2PrivateStopOrderCancelAllInput {
+  """Contract type."""
+  symbol: String!
+}
+
+"""Place new conditional order response"""
+type V2ConditionalBase {
+  extCode: String
+  extInfo: String
+  result: [V2ConditionalRes]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+"""Place new conditional order response"""
+type V2ConditionalRes {
+  basePrice: String
+  createdAt: String
+  orderLinkId: String
+  orderType: String
+  price: String
+  qty: String
+  rejectReason: String
+  remark: String
+  side: String
+  stopOrderId: String
+  stopPx: String
+  symbol: String
+  timeInForce: String
+  triggerBy: String
+  updatedAt: String
+  userId: Float
+}
+
+input V2PrivateStopOrderCreateInput {
+  """Send current market price. It will be used to compare with the value of 'stop_px', to decide whether your conditional order will be triggered by crossing trigger price from upper side or lower side. Mainly used to identify the expected direction of the current conditional order.."""
+  basePrice: String!
+  """close on trigger."""
+  closeOnTrigger: Boolean
+  """Customized order ID, maximum length at 36 characters, and order ID under the same agency has to be unique.."""
+  orderLinkId: String
+  """Conditional order type."""
+  orderType: String!
+  """Execution price for conditional order"""
+  price: String
+  """Order quantity."""
+  qty: String!
+  """Side."""
+  side: String!
+  """Trigger price."""
+  stopPx: String!
+  """Contract type."""
+  symbol: String!
+  """Time in force."""
+  timeInForce: String!
+  """Trigger price type. Default LastPrice."""
+  triggerBy: String
+}
+
+"""Replace conditional order response"""
+type ReplaceConditionalBase {
+  extCode: String
+  extInfo: String
+  result: [Result24ListItem]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+"""Replace conditional order"""
+type Result24ListItem {
+  stopOrderId: String
+}
+
+input V2PrivateStopOrderReplaceInput {
+  """Order Link ID."""
+  orderLinkId: String
+  """Order price."""
+  pRPrice: String
+  """Order quantity."""
+  pRQty: String
+  """Trigger price."""
+  pRTriggerPrice: String
+  """Stop order ID."""
+  stopOrderId: String
+  """Contract type."""
+  symbol: String!
+}
+
+input FuturesPrivateStopOrderCancelInput {
+  """Agency customized order ID."""
+  orderLinkId: String
+  """Order ID of conditional order."""
+  stopOrderId: String
+  """Contract type."""
+  symbol: String!
+}
+
+input FuturesPrivateStopOrderCancelAllInput {
+  """Contract type."""
+  symbol: String!
+}
+
+input FuturesPrivateStopOrderCreateInput {
+  """Send current market price. It will be used to compare with the value of 'stop_px', to decide whether your conditional order will be triggered by crossing trigger price from upper side or lower side. Mainly used to identify the expected direction of the current conditional order.."""
+  basePrice: String!
+  """close on trigger."""
+  closeOnTrigger: Boolean
+  """Customized order ID, maximum length at 36 characters, and order ID under the same agency has to be unique.."""
+  orderLinkId: String
+  """Conditional order type."""
+  orderType: String!
+  """Execution price for conditional order"""
+  price: String
+  """Order quantity."""
+  qty: String!
+  """Side."""
+  side: String!
+  """Trigger price."""
+  stopPx: String!
+  """Contract type."""
+  symbol: String!
+  """Time in force."""
+  timeInForce: String!
+  """Trigger price type. Default LastPrice."""
+  triggerBy: String
+}
+
+input FuturesPrivateStopOrderReplaceInput {
+  """Order Link ID."""
+  orderLinkId: String
+  """Order price."""
+  pRPrice: String
+  """Order quantity."""
+  pRQty: String
+  """Trigger price."""
+  pRTriggerPrice: String
+  """Stop order ID."""
+  stopOrderId: String
+  """Contract type."""
+  symbol: String!
+}
+
+"""cancel order response"""
+type OrderCancelBase {
+  extCode: String
+  extInfo: String
+  result: [OrderRes]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+"""Place new order response"""
+type OrderRes {
+  createdAt: String
+  cumExecFee: Float
+  cumExecQty: Float
+  cumExecValue: Float
+  lastExecPrice: Float
+  lastExecTime: Float
+  leavesQty: Float
+  orderId: String
+  orderLinkId: String
+  orderStatus: String
+  orderType: String
+  price: Float
+  qty: String
+  rejectReason: String
+  side: String
+  symbol: String
+  timeInForce: String
+  updatedAt: String
+  userId: Float
+}
+
+input FuturesPrivateOrderCancelInput {
+  """Order ID"""
+  orderId: String
+  """Order link id."""
+  orderLinkId: String
+  """Contract type."""
+  symbol: String!
+}
+
+"""Cancel all active orders response"""
+type OrderCancelAllBase {
+  extCode: String
+  extInfo: String
+  result: [OrderCancelAllRes]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+"""Cancel all active orders response"""
+type OrderCancelAllRes {
+  clOrdID: String
+  createType: String
+  createdAt: String
+  crossSeq: Float
+  crossStatus: String
+  leavesQty: Float
+  leavesValue: Float
+  orderStatus: String
+  orderType: String
+  price: String
+  qty: String
+  side: String
+  timeInForce: String
+  updatedAt: String
+  userId: Float
+}
+
+input FuturesPrivateOrderCancelAllInput {
+  """Contract type."""
+  symbol: String!
+}
+
+"""Place new order response"""
+type OrderResBase {
+  extCode: String
+  extInfo: String
+  result: [OrderRes]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+input FuturesPrivateOrderCreateInput {
+  """close on trigger"""
+  closeOnTrigger: Boolean
+  """TCustomized order ID, maximum length at 36 characters, and order ID under the same agency has to be unique."""
+  orderLinkId: String
+  """Active order type"""
+  orderType: String!
+  """Order price."""
+  price: Float
+  qty: Float!
+  """reduce only"""
+  reduceOnly: Boolean
+  """Side"""
+  side: String!
+  """stop loss price"""
+  stopLoss: Float
+  """Contract type."""
+  symbol: String!
+  """take profit price"""
+  takeProfit: Float
+  """Time in force"""
+  timeInForce: String!
+}
+
+"""Replace active order response"""
+type ReplaceOrderBase {
+  extCode: String
+  extInfo: String
+  result: [Result18ListItem]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+"""Replace active order"""
+type Result18ListItem {
+  stopOrderId: String
+}
+
+input FuturesPrivateOrderReplaceInput {
+  """Order ID."""
+  orderId: String
+  """Order Link ID."""
+  orderLinkId: String
+  """Order price."""
+  pRPrice: String
+  """Order quantity."""
+  pRQty: String
+  """Contract type."""
+  symbol: String!
+}
+
+input FuturesPrivatePositionChangePositionMarginInput {
+  """New margin you want set"""
+  margin: String!
+  """Contract type which you want update its margin"""
+  symbol: String!
+}
+
+input FuturesPrivatePositionLeverageSaveInput {
+  """New buy leverage you want set"""
+  buyLeverage: String!
+  """Position idx, used to identify positions in different position modes"""
+  positionIdx: Int!
+  """New sell leverage you want set"""
+  sellLeverage: String!
+  """A symbol which you want change its leverage"""
+  symbol: String!
+}
+
+input FuturesPrivatePositionSwitchIsolatedInput {
+  """New buy leverage you want set"""
+  buyLeverage: String!
+  """Position margin mode"""
+  isIsolated: Boolean
+  """Position idx, used to identify positions in different position modes"""
+  positionIdx: Int!
+  """New sell leverage you want set"""
+  sellLeverage: String!
+  """A symbol which you want change its leverage"""
+  symbol: String!
+}
+
+input FuturesPrivatePositionSwitchModeInput {
+  """Position Mode. 0: One-Way Mode; 3: Hedge Mode"""
+  mode: Int!
+  """A symbol which you want change its leverage"""
+  symbol: String!
+}
+
+"""Set Trading-Stop Condition response"""
+type TradingStopBase {
+  extCode: String
+  extInfo: String
+  result: [TradingStopRes]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+"""Set Trading-Stop Condition response"""
+type TradingStopRes {
+  autoAddMargin: Float
+  bustPrice: Float
+  createdAt: String
+  crossSeq: Float
+  cumCommission: Float
+  cumRealisedPnl: Float
+  deleverageIndicator: Float
+  entryPrice: Float
+  id: Float
+  leverage: Float
+  liqPrice: Float
+  ocCalcData: String
+  occClosingFee: Float
+  occFundingFee: Float
+  orderMargin: Float
+  positionMargin: Float
+  positionSeq: Float
+  positionStatus: String
+  positionValue: Float
+  realisedPnl: Float
+  riskId: Float
+  side: String
+  size: Float
+  stopLoss: Float
+  symbol: String
+  takeProfit: Float
+  updatedAt: String
+  userId: Float
+  walletBalance: Float
+}
+
+input FuturesPrivatePositionTradingStopInput {
+  """Trailing stop trigger price. Trailing stops are triggered only when the price reaches the specified price. Trailing stops are triggered immediately by default."""
+  newTrailingActive: String
+  """Not less than 0, 0 means cancel SL"""
+  stopLoss: String
+  """Contract type"""
+  symbol: String!
+  """Not less than 0, 0 means cancel TP"""
+  takeProfit: String
+  """Not less than 0, 0 means cancel TS"""
+  trailingStop: String
+}
+
+"""Cancel Linear Stop Order Base"""
+type LinearCancelStopOrderResultBase {
+  extCode: String
+  extInfo: String
+  result: [LinearCancelStopOrderResult]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+"""Cancel Linear Stop Order"""
+type LinearCancelStopOrderResult {
+  stopOrderId: String
+}
+
+input PrivateLinearStopOrderCancelInput {
+  orderLinkId: String
+  stopOrderId: String
+  symbol: String
+}
+
+"""Cancel all linear stop orders response"""
+type LinearStopOrderCancelAllBase {
+  extCode: String
+  extInfo: String
+  result: [String]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+input PrivateLinearStopOrderCancelAllInput {
+  """Contract type."""
+  symbol: String!
+}
+
+"""Create Linear Stop Order Base"""
+type LinearCreateStopOrderResultBase {
+  extCode: String
+  extInfo: String
+  result: [LinearCreateStopOrderResult]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+"""Create Linear Stop Order"""
+type LinearCreateStopOrderResult {
+  createdAt: String
+  orderLinkId: String
+  orderStatus: String
+  orderType: String
+  price: Float
+  qty: Float
+  side: String
+  slTriggerBy: String
+  stopLoss: Float
+  stopOrderId: String
+  symbol: String
+  takeProfit: Float
+  timeInForce: String
+  tpTriggerBy: String
+  triggerPrice: Float
+  updatedAt: String
+  userId: Float
+}
+
+input PrivateLinearStopOrderCreateInput {
+  basePrice: Float
+  closeOnTrigger: Boolean
+  orderLinkId: String
+  orderType: String
+  price: Float
+  qty: Float
+  reduceOnly: Boolean
+  side: String
+  slTriggerBy: String
+  stopLoss: Float
+  stopPx: Float
+  symbol: String
+  takeProfit: Float
+  timeInForce: String
+  tpTriggerBy: String
+  triggerBy: String
+}
+
+"""replace conditional order can modify/amend your conditional orders"""
+type LinearStopOrderReplace {
+  extCode: String
+  extInfo: String
+  result: [OrderIdRes]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+"""Order Id response"""
+type OrderIdRes {
+  orderId: String
+}
+
+input PrivateLinearStopOrderReplaceInput {
+  orderLinkId: String
+  pRPrice: Float
+  pRQty: String
+  pRTriggerPrice: Float
+  stopOrderId: String
+  symbol: String!
+}
+
+"""Create Linear Order Base"""
+type LinearCancelOrderResultBase {
+  extCode: String
+  extInfo: String
+  result: [LinearCancelOrderResult]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+"""Create Linear Order"""
+type LinearCancelOrderResult {
+  orderId: String
+}
+
+input PrivateLinearOrderCancelInput {
+  orderId: String
+  orderLinkId: String
+  symbol: String
+}
+
+"""Cancel all linear active orders response"""
+type LinearOrderCancelAllBase {
+  extCode: String
+  extInfo: String
+  result: [String]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+input PrivateLinearOrderCancelAllInput {
+  """Contract type."""
+  symbol: String!
+}
+
+"""Create Linear Order Base"""
+type LinearCreateOrderResultBase {
+  extCode: String
+  extInfo: String
+  result: [LinearCreateOrderResult]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+"""Create Linear Order"""
+type LinearCreateOrderResult {
+  createdTime: String
+  cumExecFee: Float
+  cumExecQty: Float
+  cumExecValue: Float
+  lastExecPrice: Float
+  orderId: String
+  orderLinkId: String
+  orderStatus: String
+  orderType: String
+  price: Float
+  qty: Float
+  reduceOnly: Boolean
+  side: String
+  slTriggerBy: String
+  stopLoss: Float
+  symbol: String
+  takeProfit: Float
+  timeInForce: String
+  tpTriggerBy: String
+  updatedTime: String
+  userId: Float
+}
+
+input PrivateLinearOrderCreateInput {
+  closeOnTrigger: Boolean
+  orderLinkId: String
+  orderType: String
+  price: Float
+  qty: Float
+  reduceOnly: Boolean
+  side: String
+  slTriggerBy: String
+  stopLoss: Float
+  symbol: String
+  takeProfit: Float
+  timeInForce: String
+  tpTriggerBy: String
+}
+
+"""replace order can modify/amend your active orders"""
+type LinearOrderReplace {
+  extCode: String
+  extInfo: String
+  result: [OrderIdRes]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+input PrivateLinearOrderReplaceInput {
+  orderId: String
+  orderLinkId: String
+  pRPrice: Float
+  pRQty: String
+  symbol: String!
+}
+
+type LinearSetMarginResult {
+  availableBalance: Float
+  positionListResult: [LinearPositionListResult]
+  walletBalance: Float
+}
+
+input PrivateLinearPositionAddMarginInput {
+  margin: Float
+  side: String
+  symbol: String
+}
+
+"""Set leverage result"""
+type LinearSetLeverageResult {
+  extCode: String
+  extInfo: String
+  result: JSON
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+input PrivateLinearPositionSetLeverageInput {
+  buyLeverage: Float
+  sellLeverage: Float
+  symbol: String
+}
+
+input PrivateLinearPositionSetAutoAddMarginInput {
+  autoAddMargin: Boolean
+  side: String
+  symbol: String
+}
+
+"""Switch isolated result"""
+type LinearSwitchIsolatedResult {
+  extCode: String
+  extInfo: String
+  result: JSON
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+input PrivateLinearPositionSwitchIsolatedInput {
+  buyLeverage: Float
+  isIsolated: Boolean
+  sellLeverage: Float
+  symbol: String
+}
+
+type LinearSwitchModeResult {
+  tpSlMode: Float
+}
+
+input PrivateLinearTpslSwitchModeInput {
+  symbol: String
+  tpSlMode: String
+}
+
+"""Set Trading Stop result"""
+type LinearSetTradingStopResult {
+  extCode: String
+  extInfo: String
+  result: JSON
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+input PrivateLinearPositionTradingStopInput {
+  side: String
+  slSize: Float
+  slTriggerBy: String
+  stopLoss: Float
+  symbol: String
+  takeProfit: Float
+  tpSize: Float
+  tpTriggerBy: String
+  trailingStop: Float
+}
+
+"""Set risk limit."""
+type LinearSetRiskLimit {
+  extCode: String
+  extInfo: String
+  result: Result63
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+type Result63 {
+  riskId: Float
+}
+
+input PrivateLinearPositionSetRiskInput {
+  """Risk ID. Can be found with the Get risk limit list endpoint."""
+  riskId: Float!
+  side: String
+  """Contract type."""
+  symbol: String!
+}
+
+input V2PrivateOrderCancelInput {
+  """Order ID"""
+  orderId: String
+  """Order link id."""
+  orderLinkId: String
+  """Contract type."""
+  symbol: String!
+}
+
+input V2PrivateOrderCancelAllInput {
+  """Contract type."""
+  symbol: String!
+}
+
+input V2PrivateOrderCreateInput {
+  """close on trigger"""
+  closeOnTrigger: Boolean
+  """TCustomized order ID, maximum length at 36 characters, and order ID under the same agency has to be unique."""
+  orderLinkId: String
+  """Active order type"""
+  orderType: String!
+  """Order price."""
+  price: Float
+  qty: Float!
+  """reduce only"""
+  reduceOnly: Boolean
+  """Side"""
+  side: String!
+  """stop loss price"""
+  stopLoss: Float
+  """Contract type."""
+  symbol: String!
+  """take profit price"""
+  takeProfit: Float
+  """Time in force"""
+  timeInForce: String!
+}
+
+input V2PrivateOrderReplaceInput {
+  """Order ID."""
+  orderId: String
+  """Order Link ID."""
+  orderLinkId: String
+  """Order price."""
+  pRPrice: String
+  """Order quantity."""
+  pRQty: String
+  """Contract type."""
+  symbol: String!
+}
+
+input PositionChangePositionMarginInput {
+  """New margin you want set"""
+  margin: String!
+  """Contract type which you want update its margin"""
+  symbol: String!
+}
+
+input UserLeverageSaveInput {
+  """New leverage you want set"""
+  leverage: String!
+  """A symbol which you want change its leverage"""
+  symbol: String!
+}
+
+input OpenApiPositionTradingStopInput {
+  """Trailing stop trigger price. Trailing stops are triggered only when the price reaches the specified price. Trailing stops are triggered immediately by default."""
+  newTrailingActive: String
+  """Not less than 0, 0 means cancel SL"""
+  stopLoss: String
+  """Contract type"""
+  symbol: String!
+  """Not less than 0, 0 means cancel TP"""
+  takeProfit: String
+  """Not less than 0, 0 means cancel TS"""
+  trailingStop: String
+}
+
+"""Set risk limit."""
+type SetRiskLimitBase {
+  extCode: String
+  extInfo: String
+  result: [RiskLimitRes]
+  retCode: Float
+  retMsg: String
+  timeNow: String
+}
+
+"""Set risk limit."""
+type RiskLimitRes {
+  position: [PositionInfo]
+  risk: [RiskIDRes]
+}
+
+input OpenApiWalletRiskLimitInput {
+  """Risk ID. Can be found with the Get risk limit list endpoint."""
+  riskId: Float!
+  """Contract type."""
+  symbol: String!
+}

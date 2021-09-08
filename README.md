@@ -1,1 +1,1 @@
-Code Depot's QLMesh Server
+Code Depot's GraphQL Mesh Server
