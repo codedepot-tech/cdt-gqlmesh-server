@@ -1,16 +1,15 @@
 {
-  "name": "cdt-qlmesh",
+  "name": "cdt-gqlmesh-server",
   "version": "0.0.1",
-  "description": "CodeDepot's graphql-mesh instance",
-  "main": "root.js",
-  "repository": "https://github.com/codedepot-tech/cdt-qlmesh",
+  "description": "Code Depot's GraphQL Mesh Server",
+  "main": "app.js",
+  "repository": "https://github.com/codedepot-tech/cdt-gqlmesh-server",
   "author": "Peter Alexander <makeroftools@creativedevelopment.systems>",
   "license": "MPLv2",
-  "private": null,
+  "private": false,
   "dependencies": {
     "@graphql-mesh/cli": "^0.38.1",
     "@graphql-mesh/openapi": "^0.18.12",
-    "@graphql-mesh/runtime": "^0.20.0",
     "graphql": "^15.5.3"
   }
 }
